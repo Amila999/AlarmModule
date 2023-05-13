@@ -19,7 +19,16 @@
     <h1 class="display-4">Alarms</h1>
     <p>All the Alarms</p>
     <p>The Date and Time now is: <span id="currentDateTime">@DateTime.Now</span></p>
-    
+
+    <div class="mb-3">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form method="post" asp-page-handler="Logout">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        }
+    </div>
+
     <table class="table">
         <thead>
             <tr>
@@ -52,7 +61,6 @@
             }
         </tbody>
     </table>
-
 </div>
 
 @section Scripts {
@@ -105,7 +113,11 @@
                     });
                 });
         }
-
         setInterval(updateTable, 2000);
+
+        function acknowledgeAlarm(alarmId) {
+            // Implement your acknowledgeAlarm functionality here
+            console.log('Acknowledging alarm with ID:', alarmId);
+        }
     </script>
 }

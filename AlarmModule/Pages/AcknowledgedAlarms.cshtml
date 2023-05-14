@@ -1,7 +1,6 @@
 ﻿@page
-@model IndexModel
+@model AlarmModule.Pages.AcknowledgedAlarmsModel
 @{
-    ViewData["Title"] = "Active Alarm page";
 }
 
 <style>
@@ -15,7 +14,7 @@
 </style>
 
 <div class="text-center">
-    <h1 class="display-4">Active Alarms</h1>
+    <h1 class="display-4">Acknowledged Alarms</h1>
     <p>Welcome @User.Identity.Name</p>
     <p>The Date and Time now is: <span id="currentDateTime">@DateTime.Now</span></p>
 
@@ -49,12 +48,7 @@
                     <td>@alarm.AlarmType</td>
                     <td>@alarm.Information</td>
                     <td>@alarm.AcknowledgeTime</td>
-                    <td>
-                        @if (string.IsNullOrEmpty(alarm.Name))
-                        {
-                            <button class="btn btn-primary" onclick="acknowledgeAlarm('@alarm.AlarmId', '@User.Identity.Name')">Acknowledge</button>
-                        }
-                    </td>
+                    <td>@alarm.Name</td>
                     <td>@alarm.Description</td>
                 </tr>
             }
@@ -96,43 +90,12 @@
                             const cell = document.createElement('td');
                             cell.textContent = value;
                             row.appendChild(cell);
-
-                            if (index === 5 && !alarm.name) {
-                                const acknowledgeButton = document.createElement('button');
-                                acknowledgeButton.className = 'btn btn-primary';
-                                acknowledgeButton.textContent = 'Acknowledge';
-                                acknowledgeButton.onclick = function () {
-                                    acknowledgeAlarm(alarm.alarmId, '@User.Identity.Name');
-                                };
-                                cell.appendChild
-                                cell.appendChild(acknowledgeButton);
-                            }
                         });
-
                         tableBody.appendChild(row);
                     });
                 });
         }
         setInterval(updateTable, 2000);
-
-        function acknowledgeAlarm(alarmId, userId) {
-            fetch(`/Index?handler=AcknowledgeAlarm&alarmId=${alarmId}&userId=${encodeURIComponent(userId)}`, {
-                method: "POST",
-                headers: {
-                    "RequestVerificationToken": document.getElementsByName("__RequestVerificationToken")[0].value
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log(`Acknowledged alarm with ID: ${alarmId}`);
-                        console.log(`Name: ${userId}`);
-                        updateTable();
-                    } else {
-                        console.error(`Failed to acknowledge alarm with ID: ${alarmId}`);
-                    }
-                });
-        }
 
     </script>
 }

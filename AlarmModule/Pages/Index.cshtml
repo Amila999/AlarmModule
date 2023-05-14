@@ -53,7 +53,7 @@
                     <td>
                         @if (string.IsNullOrEmpty(alarm.Name))
                         {
-                            <button class="btn btn-primary" onclick="acknowledgeAlarm('@alarm.AlarmId')">Acknowledge</button>
+                            <button class="btn btn-primary" onclick="acknowledgeAlarm('@alarm.AlarmId', '@User.Identity.Name')">Acknowledge</button>
                         }
                     </td>
                     <td>@alarm.Description</td>
@@ -103,8 +103,9 @@
                                 acknowledgeButton.className = 'btn btn-primary';
                                 acknowledgeButton.textContent = 'Acknowledge';
                                 acknowledgeButton.onclick = function () {
-                                    acknowledgeAlarm(alarm.alarmId);
+                                    acknowledgeAlarm(alarm.alarmId, '@User.Identity.Name');
                                 };
+                                cell.appendChild
                                 cell.appendChild(acknowledgeButton);
                             }
                         });
@@ -115,9 +116,10 @@
         }
         setInterval(updateTable, 2000);
 
-        function acknowledgeAlarm(alarmId) {
+        function acknowledgeAlarm(alarmId, userId) {
             // Implement your acknowledgeAlarm functionality here
             console.log('Acknowledging alarm with ID:', alarmId);
+            console.log('User ID:', userId);
         }
     </script>
 }

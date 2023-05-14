@@ -11,13 +11,12 @@ namespace AlarmModule.Models
         public DateTime? AcknowledgeTime { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<Alarms> GetAlarmData()
-        {
-            string connectionString = "Data Source=DESKTOP-D4R0VU6\\WINCC;Initial Catalog=SCADA_SYSTEM;Integrated Security=True;TrustServerCertificate=True";
-            SqlConnection con = new SqlConnection(connectionString);
-            con.Open();
 
+        public List<Alarms> GetAlarmData(string connectionString)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
             string sqlQuery = "SELECT * FROM GetAlarmInformation ORDER BY ActivationTime DESC;";
+            con.Open();
             SqlCommand cmd = new SqlCommand(sqlQuery, con);
 
             SqlDataReader dr = cmd.ExecuteReader();

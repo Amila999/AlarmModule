@@ -116,9 +116,23 @@
         setInterval(updateTable, 2000);
 
         function acknowledgeAlarm(alarmId, userId) {
-            // Implement your acknowledgeAlarm functionality here
-            console.log('Acknowledging alarm with ID:', alarmId);
-            console.log('Name :', userId);
+            fetch(`/Index?handler=AcknowledgeAlarm&alarmId=${alarmId}&userId=${encodeURIComponent(userId)}`, {
+                method: "POST",
+                headers: {
+                    "RequestVerificationToken": document.getElementsByName("__RequestVerificationToken")[0].value
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log(`Acknowledged alarm with ID: ${alarmId}`);
+                        console.log(`Name: ${userId}`);
+                        updateTable();
+                    } else {
+                        console.error(`Failed to acknowledge alarm with ID: ${alarmId}`);
+                    }
+                });
         }
+
     </script>
 }

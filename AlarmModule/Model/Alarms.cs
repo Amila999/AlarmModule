@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace AlarmModule.Models
 {
@@ -47,5 +48,29 @@ namespace AlarmModule.Models
             con.Close();
             return alarmList;
         }
+
+        public void AcknowledgeAlarm(string connectionString, Alarms alarm, string Name)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("AcknowledgeAlarm", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new SqlParameter("@AlarmId", alarm.AlarmId));
+                    cmd.Parameters.Add(new SqlParameter("@Name", Name));
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

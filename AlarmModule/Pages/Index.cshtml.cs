@@ -44,5 +44,17 @@ namespace AlarmModule.Pages
             return RedirectToPage("/Login");
         }
 
+        public IActionResult OnPostAcknowledgeAlarm(int alarmId, string userId)
+        {
+            // Implement the logic to acknowledge the alarm here
+            // You can call the AcknowledgeAlarm method from the Alarms class
+            connectionString = _configuration.GetConnectionString("connectionString");
+            Alarms alarm = new Alarms { AlarmId = alarmId };
+            alarm.AcknowledgeAlarm(connectionString, alarm, userId);
+
+            return new JsonResult(new { success = true });
+        }
+
+
     }
 }

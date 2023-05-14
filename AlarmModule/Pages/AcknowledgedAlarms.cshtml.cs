@@ -21,13 +21,13 @@ namespace AlarmModule.Pages
         public void OnGet()
         {
             Alarms alarms = new Alarms();
-            alarmList = alarms.GetAlarmData(_configuration.GetConnectionString("connectionString"));
+            alarmList = alarms.GetAcknowledgedAlarmData(_configuration.GetConnectionString("connectionString"));
         }
         public IActionResult OnGetAlarms()
         {
             connectionString = _configuration.GetConnectionString("connectionString");
             Alarms alarms = new Alarms();
-            var alarmData = alarms.GetAlarmData(connectionString);
+            var alarmData = alarms.GetAcknowledgedAlarmData(connectionString);
             return new JsonResult(alarmData);
         }
         public IActionResult OnPostLogout()

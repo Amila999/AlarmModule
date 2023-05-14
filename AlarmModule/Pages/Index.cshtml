@@ -2,7 +2,6 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
-    var name = "Amila Ruwan Guruge";
 }
 
 <style>
@@ -17,7 +16,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Alarms</h1>
-    <p>All the Alarms</p>
+    <p>Welcome @User.Identity.Name</p>
     <p>The Date and Time now is: <span id="currentDateTime">@DateTime.Now</span></p>
 
     <div class="mb-3">

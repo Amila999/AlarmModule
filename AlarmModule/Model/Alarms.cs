@@ -52,7 +52,7 @@ namespace AlarmModule.Models
         public List<Alarms> GetAcknowledgedAlarmData(string connectionString)
         {
             SqlConnection con = new SqlConnection(connectionString);
-            string sqlQuery = "SELECT * FROM GetAlarmInformation ORDER BY ActivationTime DESC;";
+            string sqlQuery = "SELECT * FROM GetAcknowledgedAlarms ORDER BY ActivationTime DESC;";
             con.Open();
             SqlCommand cmd = new SqlCommand(sqlQuery, con);
 
